@@ -44,4 +44,4 @@ $toGoogleCalendar = $factory->toGoogleCalendar();
 
 $toOffice = $factory->toOffice();
 
-dd(compact('factory', 'toIcal', 'toGoogleCalendar', 'toOffice'), $toGoogleCalendar->getURL());
+dd(compact('factory', 'toIcal', 'toGoogleCalendar', 'toOffice'), $toIcal->getURL());
