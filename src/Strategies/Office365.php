@@ -3,12 +3,11 @@
 namespace EventManager\Strategies;
 
 use EventManager\Contracts\EventContract;
+use EventManager\EventTemplate;
 use EventManager\Traits\EventManagerTrait;
 
-class Office365 implements EventContract
+class Office365 extends EventTemplate implements EventContract
 {
-    use EventManagerTrait;
-
     protected $format = 'Y-m-d\TH:i:s';
 
     public function getURL(): string

@@ -3,13 +3,12 @@
 namespace EventManager\Strategies;
 
 use EventManager\Contracts\EventContract;
+use EventManager\EventTemplate;
 use EventManager\Traits\EventManagerTrait;
 
-class ICal implements EventContract
+class ICal extends EventTemplate implements EventContract
 {
-    use EventManagerTrait;
 
-    protected $format = 'Ymd\THis';
 
     public function getURL(): string
     {

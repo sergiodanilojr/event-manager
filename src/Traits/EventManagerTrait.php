@@ -4,6 +4,9 @@ namespace EventManager\Traits;
 
 use DateTime;
 use DateTimeZone;
+use EventManager\Contracts\EventContract;
+use ReflectionClass;
+use ReflectionProperty;
 
 trait EventManagerTrait
 {
@@ -11,9 +14,9 @@ trait EventManagerTrait
 
     protected $description;
 
-    protected DateTime $startAt;
+    protected $startDate;
 
-    protected DateTime $endAt;
+    protected $endDate;
 
     protected $timeZone = 'UTC';
 
@@ -22,6 +25,11 @@ trait EventManagerTrait
     protected $query;
 
     protected $format;
+
+    public function __construct(null|EventContract $event = null)
+    {
+        $this->rebuild($event);
+    }
 
     public function setSummary(string $summary): self
     {
@@ -49,24 +57,24 @@ trait EventManagerTrait
 
     public function setStartDate(DateTime $start): self
     {
-        $this->startAt = $start;
+        $this->startDate = $start;
         return $this;
     }
 
     public function getStartDate(): DateTime
     {
-        return $this->startAt;
+        return $this->startDate;
     }
 
     public function setEndDate(DateTime $end): self
     {
-        $this->endAt = $end;
+        $this->endDate = $end;
         return $this;
     }
 
     public function getEndDate(): DateTime
     {
-        return $this->endAt;
+        return $this->endDate;
     }
 
     public function setTimeZone(string | DateTimeZone $timezone = 'UTC'): self
@@ -99,5 +107,22 @@ trait EventManagerTrait
     protected function dateFormater(DateTime $date)
     {
         return $date->setTimezone($this->timeZone ?? $this->setTimeZone())->format($this->format ?? 'Ymd\THis');
+    }
+
+    protected function rebuild(null | EventContract $event)
+    {
+        if (!$event) return;
+
+        $reflectionEvent = new ReflectionClass($event);
+        $properties = $reflectionEvent->getProperties(ReflectionProperty::IS_PROTECTED);
+
+        foreach ($properties as $p) {
+
+            $method = "get" . ucfirst($p->name);
+
+            if (method_exists($this, $method) && property_exists($this, $p->name) && method_exists($this, "set" . ucfirst($p->name))) {
+                $this->{$p->name} = $event->{$method}();
+            }
+        }
     }
 }

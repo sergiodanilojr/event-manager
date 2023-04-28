@@ -7,7 +7,7 @@ use EventManager\Strategies\GoogleCalendar;
 use EventManager\Strategies\ICal;
 use EventManager\Strategies\Office365;
 
-class EventFacade
+class Event
 {
     public function toOffice(): EventContract
     {

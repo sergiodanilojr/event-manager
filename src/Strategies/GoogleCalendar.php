@@ -3,12 +3,11 @@
 namespace EventManager\Strategies;
 
 use EventManager\Contracts\EventContract;
+use EventManager\EventTemplate;
 use EventManager\Traits\EventManagerTrait;
 
-class GoogleCalendar implements EventContract
+class GoogleCalendar extends EventTemplate implements EventContract
 {
-    use EventManagerTrait;
-
     protected $format = 'Ymd\THis';
 
     public function getURL(): string
@@ -38,13 +37,5 @@ class GoogleCalendar implements EventContract
     public function download(string $name = 'event.ics'): void
     {
         return;
-    }
-
-    private function getDates(): array
-    {
-        $startAt = $this->dateFormater($this->startAt);
-        $endAt = $this->dateFormater($this->endAt);
-
-        return [$startAt, $endAt];
     }
 }
