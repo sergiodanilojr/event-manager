@@ -8,7 +8,7 @@ use EventManager\Traits\EventManagerTrait;
 
 class ICal extends EventTemplate implements EventContract
 {
-
+    protected $format = 'Ymd\THis';
 
     public function getURL(): string
     {
@@ -17,15 +17,13 @@ class ICal extends EventTemplate implements EventContract
 
     public function toArray(): array
     {
-        return [
-            
-        ];
+        return [];
     }
 
     public function getQuery(): string
     {
-        $startAt = $this->dateFormater($this->startAt);
-        $endAt = $this->dateFormater($this->endAt);
+        $startAt = $this->dateFormater($this->startDate);
+        $endAt = $this->dateFormater($this->endDate);
 
         return <<<ICS
         BEGIN:VCALENDAR

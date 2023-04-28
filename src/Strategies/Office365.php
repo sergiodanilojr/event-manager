@@ -17,8 +17,8 @@ class Office365 extends EventTemplate implements EventContract
 
     public function toArray(): array
     {
-        $startAt = $this->dateFormater($this->startAt);
-        $endAt = $this->dateFormater($this->endAt);
+        $startAt = $this->dateFormater($this->startDate);
+        $endAt = $this->dateFormater($this->endDate);
 
         return [
             'subject' => $this->summary,
